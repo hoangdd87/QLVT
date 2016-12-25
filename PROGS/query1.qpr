@@ -1,0 +1,7 @@
+SELECT Dongphieu.mavt;
+ FROM ;
+     qlvt!phieu ;
+    INNER JOIN qlvt!dongphieu ;
+   ON  Phieu.idphieu = Dongphieu.idphieu;
+ GROUP BY Dongphieu.mavt;
+ HAVING  Dongphieu.mavt = ( "VT01" )

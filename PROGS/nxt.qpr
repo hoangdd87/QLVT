@@ -1,0 +1,12 @@
+SELECT Dmvt.mavt, Dmvt.tenvt,;
+  getdudkkl(mavt,DATE(2015,1,1),"") AS kldudk,;
+  getdudktt(mavt,DATE(2015,1,1),"") AS ttdudk,;
+  gettongkl(mavt,DATE(2015,1,1),DATE(2015,12,31),"PN","") AS klnhaptk,;
+  gettongtt(mavt,DATE(2015,1,1),DATE(2015,12,31),"PN","") AS ttnhaptk,;
+  gettongkl(mavt,DATE(2015,1,1),DATE(2015,12,31),"PX","") AS klxuattk,;
+  gettongtt(mavt,DATE(2015,1,1),DATE(2015,12,31),"PX","") AS ttxuattk,;
+  getduckkl(mavt,DATE(2015,12,31),"") AS klduck,;
+  getducktt(mavt,DATE(2015,12,31),"") AS ttduck;
+ FROM ;
+     qlvt!dmvt;
+ INTO CURSOR cnxt  

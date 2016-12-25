@@ -1,0 +1,249 @@
+**************************************************
+*-- Class:        txtnumeric (c:\newqavw\qa_classes.vcx)
+*-- ParentClass:  textbox
+*-- BaseClass:    textbox
+*-- Time Stamp:   10/04/01 11:27:04
+*
+DEFINE CLASS txtnumeric AS textbox
+   Alignment = 3
+   Value = 0
+   Width = 100
+   commas = .T.
+   decimals = 3
+   Name = "txtnumeric"
+   currency = .F.
+   PROTECTED coldinputmask
+   PROTECTED coriginputmask
+   PROTECTED cvalue
+   PROTECTED oldcontrolsource
+   PROTECTED oldtype
+
+
+   PROTECTED PROCEDURE setinputmask
+      LOCAL lcMask, liIntCount, lnValue, liX
+
+      *** Changing the .InputMask allows the user to see the data in the preferred format
+      WITH THIS
+         *** If the developer specified their own, use that
+         IF !EMPTY(.cOrigInputMask)
+            .INPUTMASK = .cOldInputMask
+            RETURN .T.
+         ENDIF
+
+         *** If there are no Commas, Currency or Decimals requested, then no mask is required
+         IF !(.Commas OR .CURRENCY OR (.Decimals > 0))
+            RETURN .T.
+         ENDIF
+
+         *** Convert the current data to numeric
+         DO CASE
+            CASE VARTYPE(.VALUE) = 'N'
+               lnValue = .VALUE
+
+            CASE VARTYPE(.VALUE) = 'C'
+               lnValue = VAL(.VALUE)
+
+            OTHERWISE
+               MESSAGEBOX("Unhandled Value Type", 0, "Error")
+               .ENABLED = .F.
+               RETURN .F.
+         ENDCASE
+
+         lcMask = ""
+
+         *** Count the Integers
+         liIntCount  = LEN(ALLTRIM(STR(lnValue, 20)))
+         IF INT(lnValue) = 0
+            liIntCount = 0
+         ENDIF
+
+         *** Store a 9 for each of the integers
+         FOR liX = 1 TO liIntCount
+            lcMask = '9' + lcMask
+
+            *** Add Commas
+            IF MOD(liX, 3) = 0 AND liX < liIntCount AND .Commas
+               lcMask = ',' + lcMask
+            ENDIF
+         ENDFOR
+
+         *** Add Decimals
+         IF .DECIMALS > 0
+            lcMask = lcMask + "."
+            FOR liX = 1 TO .DECIMALS
+               lcMask = lcMask + "9"
+            NEXT
+            IF LEFT(lcMask, 1) = '.'
+               lcMask = "9" + lcMask
+            ENDIF
+         ENDIF
+
+         *** Add $
+         IF .CURRENCY
+            lcMask = '$' + lcMask
+         ENDIF
+
+         THIS.INPUTMASK = lcMask
+      ENDWITH
+   ENDPROC
+
+
+   PROCEDURE Refresh
+      THIS.SetInputMask()
+   ENDPROC
+
+
+   PROCEDURE Init
+      *** Check Some Settings
+      ASSERT VARTYPE(This.Value) == 'N' MESSAGE "Value must be numeric"
+      ASSERT VARTYPE(This.Decimals) == 'N' MESSAGE "Decimals must be numeric"
+      ASSERT VARTYPE(This.Commas) == 'L' MESSAGE "Commas must be Logical"
+      ASSERT VARTYPE(This.Currency) == 'L' MESSAGE "Currency must be Logical"
+
+      IF VARTYPE(This.Value) + VARTYPE(This.Decimals) + VARTYPE(This.Commas) + VARTYPE(This.Currency) != "NNLL"
+         RETURN .F.
+      ENDIF
+
+      *** Store any InputMask the developer assigned
+      This.cOrigInputMask = This.InputMask
+      This.cOldInputMask = This.InputMask
+      *** Create an InputMask to display the data initially
+      This.SetInputMask()
+   ENDPROC
+
+
+   PROCEDURE LostFocus
+      *** Upon leaving the field, we change the data back to the original type and generate a new inputmask
+      LOCAL lcMask, lcOldDecimals
+
+      *** Save the number of decimals used, then set it to our own
+      lcOldDecimals = SET("DECIMALS")
+      SET DECIMALS TO THIS.DECIMALS
+
+      WITH THIS
+
+         *** If we don't have an oldVartype, then use the current one as our old one
+         IF VARTYPE(.OldType) != 'C'
+            .OldType = VARTYPE(.VALUE)
+         ENDIF
+
+         *** Build the InputMask
+         .SetInputMask()
+
+         *** Convert the data back to the original type
+         DO CASE
+            * Small change here to allow for blanks
+            CASE .OldType = 'N' AND VARTYPE(.VALUE) == 'C'
+               if !empty(alltrim(transform(.VALUE))) && Allows blanks, instead of showing a 0
+                  .VALUE = VAL(.VALUE)
+               endif
+
+            CASE .OldType = 'N' AND VARTYPE(.VALUE) == 'N'
+
+            CASE .OldType = 'C' AND VARTYPE(.VALUE) == 'C'
+
+            CASE .OldType = 'C' AND VARTYPE(.VALUE) == 'N'
+               .Value = STR(.VALUE)
+
+            OTHERWISE
+         ENDCASE
+
+         *** Re-associate the .ControlSource
+         lValue = .VALUE
+         .CONTROLSOURCE = .OldControlSource
+         .VALUE = lValue
+      ENDWITH
+
+      *** Restore the decimals
+      SET DECIMALS TO lcOldDecimals
+   ENDPROC
+
+
+   PROCEDURE GotFocus
+      *** On entry to the textbox, we change to a character string so that the user can enter data unhindered
+      WITH This
+         *** Store the .ControlSource as we are going to disassociate
+         .OldControlSource = .ControlSource
+         .ControlSource = ""
+
+         *** Convert the data to character to facilitate user entry
+         .OldType = VARTYPE(.Value)
+         DO CASE
+            CASE .OldType = 'N'
+               IF INT(.Value) <> .Value
+                  .Value = ALLTRIM(STR(.Value, 20, .Decimals))
+               ELSE
+                  .Value = ALLTRIM(STR(.Value, 20))
+               ENDIF
+
+            CASE .OldType = 'C'
+
+            OTHERWISE
+               MessageBox("Unhandled Type", 0, "Unhandled Value Type")
+               .Enabled = .F.
+               RETURN .F.
+         ENDCASE
+
+         *** Save the .InputMask
+         .cOldInputMask = .InputMask
+
+         *** Clear the .InputMask
+         .InputMask = ""
+
+         *** Perform [[Visual FoxPro]] native GotFocus()
+         TextBox::GotFocus()
+
+         *** Select the entire field
+         .SelStart = 0
+         .SelLength = LEN(.VALUE)
+      
+         *** Don't let base class behavior reset .SelStart/.SelLength
+         NODEFAULT
+
+      ENDWITH
+   ENDPROC
+
+
+   PROCEDURE KeyPress
+      LPARAMETERS nKeyCode, nShiftAltCtrl
+      LOCAL liLoc
+
+      WITH THIS
+         DO CASE
+
+            CASE nKeyCode = ASC('.')  && Period Key
+               *** Allow only one period
+
+               liLoc = AT('.', .VALUE)
+               *** If this is not the first decimal and the existing one is not selected,
+               ***         then ignore the keypress
+               IF (liLoc != 0) AND !(BETWEEN(liLoc - 1, .SELSTART, .SELSTART + .SELLENGTH - 1))
+                  NODEFAULT
+               ENDIF
+
+            CASE nKeyCode = ASC('-')  && Minus Key
+               *** Allow only one minus sign, and at the beginning
+
+               liLoc = AT('-', .VALUE)
+               *** If we are not at the start of the number or
+               ***         there are others and the other one is not selected
+               ***         then ignore this keypress
+               IF .SELSTART != 0 OR (liLoc != 0 AND .SELLENGTH > 0)
+                  NODEFAULT
+               ENDIF
+
+            CASE BETWEEN(nKeyCode, ASC('0'), ASC('9')) && Numeric
+               * Do nothing
+
+            CASE BETWEEN(nKeyCode, 32, 122) && Eliminate most keyboard characters
+               NODEFAULT
+
+            OTHERWISE
+               * Do nothing
+         ENDCASE
+      ENDWITH
+   ENDPROC
+ENDDEFINE
+*
+*-- EndDefine: txtnumeric
+**************************************************

@@ -1,0 +1,45 @@
+FUNCTION __checkdongphieuvalidation	
+	olddatass=SET("Datasession") 
+	
+	IF EMPTY(khoaso.ngayksht) &&Chua nhap ngay khoa so do vay luon luon sua doi thoai mai
+
+	RETURN .T. &&Validate
+	ENDIF 
+	
+	IF !USED("phieu")
+		USE data\phieu IN 0
+	ENDIF 
+	recno_phieu=IIF(EOF("phieu") or BOF("phieu"),0,RECNO("phieu"))	
+	
+	IF !USED("dongphieu")
+	
+		USE data\dongphieu IN 0
+	ENDIF 
+	recno_dongphieu=IIF(EOF("dongphieu") or BOF("dongphieu"),0,RECNO("dongphieu"))
+	old_alias=ALIAS()
+	SELECT dongphieu	
+		
+	_ngaylap=LOOKUP(phieu.ngaylap,dongphieu.idphieu,phieu.idphieu)
+	
+	IF recno_phieu>0
+		GO recno_phieu IN "phieu"
+	ENDIF 
+	
+	IF recno_dongphieu>0
+		GO recno_dongphieu IN "dongphieu"
+	ENDIF
+	
+	IF !EMPTY(old_alias)
+		SELECT (old_alias)
+	ENDIF  
+	IF _ngaylap>khoaso.ngayksht && Ngaylap o phieu lon hon ngay khoa so hien tai duoc phep cap nhap
+		SET DATASESSION TO (olddatass)
+		RETURN .T.
+	ENDIF 
+	
+ 	**Cac truong hop con lai khong duoc sua
+ 	MESSAGEBOX("Da khoa so, ban khong the thuc hien thao tac nay") 
+	SET DATASESSION TO (olddatass)
+	RETURN .F.
+ENDFUNC	
+

@@ -1,0 +1,8 @@
+SELECT Phieu.sophieu, Phieu.ngaylap, Phieu.diengiai, Phieu.makho, Phieu.lp,;
+  Dongphieu.mavt, Dongphieu.kl, kl*dg AS tt;
+ FROM ;
+     qlvt!phieu ;
+    INNER JOIN qlvt!dongphieu ;
+   ON  Phieu.idphieu = Dongphieu.idphieu;
+ ORDER BY Dongphieu.mavt, Phieu.ngaylap;
+ INTO CURSOR chitietvt  

@@ -1,0 +1,36 @@
+
+
+Fatal error: Exception code=C0000005 @ 11/06/15 04:56:38 PM. Error log file: D:\Google_Drive\FoxproDemo\QLVT\VFP9Rerr.log
+	Called from -  frmdm.grddongphieu.colxoa.check1.init line 1  {d:\google_drive\foxprodemo\qlvt\forms\phieu.sct d:\google_drive\foxprodemo\qlvt\forms\phieu.sct}
+	Called from -  frmmain.oletree.nodeclick line 12  {d:\google_drive\foxprodemo\qlvt\forms\main.sct d:\google_drive\foxprodemo\qlvt\forms\main.sct}
+	Called from -  main line 5  {D:\Google_Drive\FoxproDemo\QLVT\progs\main.prg d:\google_drive\foxprodemo\qlvt\qlvt.exe}
+
+
+Fatal error: Exception code=C0000005 @ 11/06/15 05:01:09 PM. Error log file: D:\Google_Drive\FoxproDemo\QLVT\VFP9Rerr.log
+	Called from -  frmdm.grddongphieu.colxoa.check1.init line 1  {d:\google_drive\foxprodemo\qlvt\forms\phieu.sct d:\google_drive\foxprodemo\qlvt\forms\phieu.sct}
+	Called from -  frmmain.oletree.nodeclick line 12  {d:\google_drive\foxprodemo\qlvt\forms\main.sct d:\google_drive\foxprodemo\qlvt\forms\main.sct}
+	Called from -  main line 5  {D:\Google_Drive\FoxproDemo\QLVT\progs\main.prg d:\google_drive\foxprodemo\qlvt\qlvt.exe}
+
+
+Fatal error: Exception code=C0000005 @ 11/06/15 05:18:15 PM. Error log file: D:\Google_Drive\FoxproDemo\QLVT\VFP9Rerr.log
+	Called from -  frmdm.grddongphieu.colxoa.check1.init line 1  {d:\google_drive\foxprodemo\qlvt\forms\phieu.sct d:\google_drive\foxprodemo\qlvt\forms\phieu.sct}
+	Called from -  frmmain.oletree.nodeclick line 12  {d:\google_drive\foxprodemo\qlvt\forms\main.sct d:\google_drive\foxprodemo\qlvt\forms\main.sct}
+	Called from -  main line 5  {D:\Google_Drive\FoxproDemo\QLVT\progs\main.prg d:\google_drive\foxprodemo\qlvt\qlvt.exe}
+
+
+Fatal error: Exception code=C0000005 @ 11/06/15 05:19:46 PM. Error log file: D:\Google_Drive\FoxproDemo\QLVT\VFP9Rerr.log
+	Called from -  frmdm.grddongphieu.colxoa.check1.init line 1  {d:\google_drive\foxprodemo\qlvt\forms\phieu.sct d:\google_drive\foxprodemo\qlvt\forms\phieu.sct}
+	Called from -  frmmain.oletree.nodeclick line 12  {d:\google_drive\foxprodemo\qlvt\forms\main.sct d:\google_drive\foxprodemo\qlvt\forms\main.sct}
+	Called from -  main line 5  {D:\Google_Drive\FoxproDemo\QLVT\progs\main.prg d:\google_drive\foxprodemo\qlvt\qlvt.exe}
+
+
+Fatal error: Exception code=C0000005 @ 11/06/15 05:20:39 PM. Error log file: D:\Google_Drive\FoxproDemo\QLVT\VFP9Rerr.log
+	Called from -  frmdm.grddongphieu.colxoa.check1.init line 1  {d:\google_drive\foxprodemo\qlvt\forms\phieu.sct d:\google_drive\foxprodemo\qlvt\forms\phieu.sct}
+	Called from -  frmmain.oletree.nodeclick line 12  {d:\google_drive\foxprodemo\qlvt\forms\main.sct d:\google_drive\foxprodemo\qlvt\forms\main.sct}
+	Called from -  main line 5  {D:\Google_Drive\FoxproDemo\QLVT\progs\main.prg d:\google_drive\foxprodemo\qlvt\qlvt.exe}
+
+
+Fatal error: Exception code=C0000005 @ 11/06/15 05:24:39 PM. Error log file: D:\Google_Drive\FoxproDemo\QLVT\VFP9Rerr.log
+	Called from -  frmdm.grddongphieu.colxoa.check1.init line 1  {d:\google_drive\foxprodemo\qlvt\forms\phieu.sct d:\google_drive\foxprodemo\qlvt\forms\phieu.sct}
+	Called from -  frmmain.oletree.nodeclick line 12  {d:\google_drive\foxprodemo\qlvt\forms\main.sct d:\google_drive\foxprodemo\qlvt\forms\main.sct}
+	Called from -  main line 5  {D:\Google_Drive\FoxproDemo\QLVT\progs\main.prg d:\google_drive\foxprodemo\qlvt\qlvt.exe}
